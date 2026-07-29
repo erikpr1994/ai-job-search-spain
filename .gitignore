@@ -49,6 +49,9 @@ Thumbs.db
 .vscode/
 .idea/
 
+# Tooling caches
+.tokensave/
+
 # Memory files (Claude Code user-specific)
 .claude/projects/
 
