@@ -1,5 +1,16 @@
 # Contributing
 
+> **This is a fork.** It adapts the upstream template to the Spanish job market
+> (InfoJobs, Tecnoempleo, GetManfred) and is maintained for personal use. The
+> policy below is **upstream's**, reproduced as-is — including its references to
+> the Danish demonstration portals, which this fork replaced. It governs what
+> gets merged into
+> [MadsLorentzen/ai-job-search](https://github.com/MadsLorentzen/ai-job-search),
+> not this fork. Market-specific work that upstream declines by design is
+> precisely what belongs here.
+>
+> Sync this fork with upstream using `/sync-upstream`.
+
 Thanks for considering a contribution! This repo has a deliberate, narrow philosophy, and most declined PRs are well-executed work that simply didn't know about it. Read this first; it will save you effort and tell you where your work will land best.
 
 ## The one rule everything follows from

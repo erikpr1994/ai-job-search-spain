@@ -1,5 +1,11 @@
 # Changelog
 
+> **This is a fork.** The entries below are **upstream's** release history
+> ([MadsLorentzen/ai-job-search](https://github.com/MadsLorentzen/ai-job-search)),
+> kept unmodified so `/sync-upstream` can tell which upstream releases this fork
+> has ingested. This fork's own changes (the Spanish portals and their
+> localizations) live in `git log`, not here.
+
 All notable changes to this project are documented here. The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres
 to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
