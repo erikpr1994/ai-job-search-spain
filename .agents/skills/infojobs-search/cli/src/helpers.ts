@@ -21,6 +21,9 @@ const UA =
   "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 " +
   "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
 
+/** Abort a stalled board request instead of hanging the CLI indefinitely. */
+export const REQUEST_TIMEOUT_MS = 15000
+
 /** Fetch HTML with exponential backoff + jitter on 429/5xx. Returns "" on a 404. */
 export async function htmlFetch(url: string): Promise<string> {
   const maxRetries = 6
@@ -33,6 +36,7 @@ export async function htmlFetch(url: string): Promise<string> {
         "Accept-Language": "es-ES,es;q=0.9,en;q=0.8",
       },
       redirect: "follow",
+      signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
     })
     if (response.status === 429 || response.status >= 500) {
       if (attempt === maxRetries) {

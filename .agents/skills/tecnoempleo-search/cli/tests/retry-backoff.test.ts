@@ -1,0 +1,81 @@
+import { afterEach, describe, test, expect } from "bun:test"
+import { htmlFetch } from "../src/helpers"
+
+// The portal contract requires backoff on 429/5xx. These tests pin the retry
+// loop offline: a stubbed fetch counts attempts, and a stubbed setTimeout
+// fires immediately so the exhaustion case does not sleep through the real
+// 500ms -> 8s backoff schedule.
+//
+// htmlFetch deliberately RETURNS "" on a 404 instead of throwing, so callers
+// can tell "listing gone" apart from a hard error. The 404 test pins that.
+
+const originalFetch = globalThis.fetch
+const originalSetTimeout = globalThis.setTimeout
+
+afterEach(() => {
+  globalThis.fetch = originalFetch
+  globalThis.setTimeout = originalSetTimeout
+})
+
+function instantTimers() {
+  globalThis.setTimeout = ((fn: () => void) =>
+    originalSetTimeout(fn, 0)) as unknown as typeof setTimeout
+}
+
+function stubFetch(responses: Array<() => Response>): { calls: number } {
+  const state = { calls: 0 }
+  globalThis.fetch = (async () => {
+    const i = Math.min(state.calls, responses.length - 1)
+    state.calls++
+    return responses[i]!()
+  }) as unknown as typeof fetch
+  return state
+}
+
+describe("htmlFetch retry/backoff", () => {
+  test("retries a 429 and succeeds on the next attempt", async () => {
+    instantTimers()
+    const state = stubFetch([
+      () => new Response("", { status: 429 }),
+      () => new Response("<html>ok</html>", { status: 200 }),
+    ])
+
+    const html = await htmlFetch("https://www.tecnoempleo.com/x")
+    expect(html).toContain("ok")
+    expect(state.calls).toBe(2)
+  })
+
+  test("retries a 503 and succeeds on the next attempt", async () => {
+    instantTimers()
+    const state = stubFetch([
+      () => new Response("", { status: 503 }),
+      () => new Response("<html>ok</html>", { status: 200 }),
+    ])
+
+    const html = await htmlFetch("https://www.tecnoempleo.com/x")
+    expect(html).toContain("ok")
+    expect(state.calls).toBe(2)
+  })
+
+  test("returns empty string on a 404 without retrying", async () => {
+    const state = stubFetch([() => new Response("", { status: 404 })])
+
+    expect(await htmlFetch("https://www.tecnoempleo.com/x")).toBe("")
+    expect(state.calls).toBe(1)
+  })
+
+  test("does not retry a plain 4xx", async () => {
+    const state = stubFetch([() => new Response("", { status: 400 })])
+
+    await expect(htmlFetch("https://www.tecnoempleo.com/x")).rejects.toThrow(/400/)
+    expect(state.calls).toBe(1)
+  })
+
+  test("gives up after the initial attempt plus six retries on persistent 5xx", async () => {
+    instantTimers()
+    const state = stubFetch([() => new Response("", { status: 500 })])
+
+    await expect(htmlFetch("https://www.tecnoempleo.com/x")).rejects.toThrow(/500/)
+    expect(state.calls).toBe(7)
+  })
+})

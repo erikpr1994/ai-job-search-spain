@@ -24,6 +24,9 @@ const UA =
   "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 " +
   "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
 
+/** Abort a stalled board request instead of hanging the CLI indefinitely. */
+export const REQUEST_TIMEOUT_MS = 15000
+
 /**
  * Fetch raw text with exponential backoff + jitter on 429/5xx. Returns `null`
  * on a 404 so callers can report "not found" instead of crashing.
@@ -39,6 +42,7 @@ export async function fetchText(url: string, accept: string): Promise<string | n
         "Accept-Language": "en-US,en;q=0.9",
       },
       redirect: "follow",
+      signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
     })
     if (response.status === 429 || response.status >= 500) {
       // The Asgard backend answers a missing/invalid offer id with a
