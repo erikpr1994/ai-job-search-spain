@@ -93,7 +93,7 @@ When you port a fix, port it to the fork's actual contract — do not copy upstr
 Run all of it. Report results honestly, including anything that fails.
 
 ```bash
-for t in getmanfred-search infojobs-search tecnoempleo-search linkedin-search freehire-search; do
+for t in getmanfred-search infojobs-search joppy-search tecnoempleo-search linkedin-search freehire-search; do
   (cd .agents/skills/$t/cli && bun install --silent && bun run typecheck && bun test)
 done
 python tools/security_guards.py

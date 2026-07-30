@@ -92,7 +92,7 @@ cd ai-job-search
 PowerShell:
 
 ```powershell
-$tools = @("infojobs-search", "tecnoempleo-search", "getmanfred-search", "linkedin-search", "freehire-search")
+$tools = @("infojobs-search", "tecnoempleo-search", "getmanfred-search", "joppy-search", "linkedin-search", "freehire-search")
 foreach ($tool in $tools) {
   Push-Location ".agents/skills/$tool/cli"
   bun install
@@ -103,7 +103,7 @@ foreach ($tool in $tools) {
 Bash / zsh / Git Bash:
 
 ```bash
-for tool in infojobs-search tecnoempleo-search getmanfred-search linkedin-search freehire-search; do
+for tool in infojobs-search tecnoempleo-search getmanfred-search joppy-search linkedin-search freehire-search; do
   (cd .agents/skills/$tool/cli && bun install)
 done
 ```
@@ -198,6 +198,7 @@ ai-job-search/
 │   ├── getmanfred-search/             # GetManfred (Spain, tech-focused)
 │   ├── infojobs-search/               # InfoJobs (Spain)
 │   ├── tecnoempleo-search/            # Tecnoempleo (Spain, tech-focused)
+│   ├── joppy-search/                  # Joppy (Barcelona tech, salary-transparent)
 │   ├── linkedin-search/               # LinkedIn public job listings (country-agnostic)
 │   └── freehire-search/               # freehire.me tech job aggregator (multi-market, REST API)
 ├── cv/
