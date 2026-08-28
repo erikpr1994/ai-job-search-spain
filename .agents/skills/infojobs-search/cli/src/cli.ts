@@ -16,6 +16,14 @@ interface Flags {
   [k: string]: string | boolean | string[]
 }
 
+const KNOWN_SEARCH_FLAGS = new Set(["query", "jobage", "page", "limit", "format", "help"])
+const KNOWN_DETAIL_FLAGS = new Set(["format", "help"])
+
+function badFlag(name: string, cmd: string): number {
+  process.stderr.write(JSON.stringify({ error: `Unknown flag "--${name}" for "${cmd}"`, code: "BAD_FLAG" }) + "\n")
+  return 1
+}
+
 function parseFlags(argv: string[]): Flags {
   const flags: Flags = { _: [] }
   const alias: Record<string, string> = { q: "query", n: "limit" }
@@ -69,6 +77,10 @@ async function main(): Promise<number> {
   }
 
   if (cmd === "search") {
+    for (const key of Object.keys(flags)) {
+      if (key !== "_" && !KNOWN_SEARCH_FLAGS.has(key)) return badFlag(key, "search")
+    }
+
     const fmt = (flags.format as string) || "json"
 
     const parseIntFlag = (name: string, raw: string | boolean | string[]): number | null => {
@@ -107,6 +119,9 @@ async function main(): Promise<number> {
   }
 
   if (cmd === "detail") {
+    for (const key of Object.keys(flags)) {
+      if (key !== "_" && !KNOWN_DETAIL_FLAGS.has(key)) return badFlag(key, "detail")
+    }
     const id = (flags._ as string[])[1]
     if (!id) {
       process.stderr.write(JSON.stringify({ error: "detail requires an <id|url>", code: "NO_ID" }) + "\n")

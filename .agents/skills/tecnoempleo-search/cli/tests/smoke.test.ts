@@ -51,6 +51,18 @@ describe("tecnoempleo CLI — flag validation (offline)", () => {
     expect(r.exitCode).not.toBe(0)
     expect(parsedStderr(r.stderr).code).toBe("BAD_LOCATION")
   })
+
+  test("an unknown flag on search is rejected", async () => {
+    const r = await runCLI(["search", "-q", "React", "--bogus"])
+    expect(r.exitCode).not.toBe(0)
+    expect(parsedStderr(r.stderr).code).toBe("BAD_FLAG")
+  })
+
+  test("an unknown flag on detail is rejected", async () => {
+    const r = await runCLI(["detail", "rf-d97516df323a73b22543", "--bogus"])
+    expect(r.exitCode).not.toBe(0)
+    expect(parsedStderr(r.stderr).code).toBe("BAD_FLAG")
+  })
 })
 
 describe("tecnoempleo CLI — live search + detail", () => {

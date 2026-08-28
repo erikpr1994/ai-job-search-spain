@@ -69,4 +69,18 @@ describe("getmanfred-search live smoke test", () => {
     const err = parsedStderr(result.stderr);
     expect(err.code).toBe("NO_ID");
   });
+
+  test("an unknown flag on search is rejected", async () => {
+    const result = await runCLI(["search", "-q", "React", "--bogus"]);
+    expect(result.exitCode).not.toBe(0);
+    const err = parsedStderr(result.stderr);
+    expect(err.code).toBe("BAD_FLAG");
+  });
+
+  test("an unknown flag on detail is rejected", async () => {
+    const result = await runCLI(["detail", "8400", "--bogus"]);
+    expect(result.exitCode).not.toBe(0);
+    const err = parsedStderr(result.stderr);
+    expect(err.code).toBe("BAD_FLAG");
+  });
 });

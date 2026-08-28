@@ -64,4 +64,21 @@ describe("InfoJobs CLI flag validation", () => {
       expect(err.code).toBe("BAD_CMD");
     });
   });
+
+  describe("unknown flag validation", () => {
+    test("an unknown flag on search is rejected", async () => {
+      const result = await runCLI(["search", "-q", "React", "--bogus"]);
+      expect(result.exitCode).not.toBe(0);
+      const err = parsedStderr(result.stderr);
+      expect(err.code).toBe("BAD_FLAG");
+      expect(err.error).toMatch(/bogus/);
+    });
+
+    test("an unknown flag on detail is rejected", async () => {
+      const result = await runCLI(["detail", "of-i5729505a1a431da38968e4bb91f095", "--bogus"]);
+      expect(result.exitCode).not.toBe(0);
+      const err = parsedStderr(result.stderr);
+      expect(err.code).toBe("BAD_FLAG");
+    });
+  });
 });
