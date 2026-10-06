@@ -17,7 +17,7 @@ interface SearchResponse {
   }[]
 }
 
-describe("live search", () => {
+describe.skipIf(!process.env.LIVE_TESTS)("live search", () => {
   test("returns real results for a common query", async () => {
     const response = parseJSON<SearchResponse>(await runCLI(["search", "-q", "React"]))
 
@@ -72,7 +72,7 @@ describe("live search", () => {
   })
 })
 
-describe("live detail", () => {
+describe.skipIf(!process.env.LIVE_TESTS)("live detail", () => {
   test("fetches a full posting for an id taken from search", async () => {
     const search = parseJSON<SearchResponse>(await runCLI(["search", "-q", "React", "--limit", "1"]))
     expect(search.results.length).toBeGreaterThan(0)

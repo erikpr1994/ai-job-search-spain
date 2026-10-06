@@ -23,7 +23,7 @@ function parsedStderr(stderr: string): { error?: string; code?: string } {
   }
 }
 
-describe("getmanfred-search live smoke test", () => {
+describe.skipIf(!process.env.LIVE_TESTS)("getmanfred-search live smoke test", () => {
   test('search -q "React" returns at least one well-formed result', async () => {
     const result = await runCLI(["search", "-q", "React", "--limit", "5"]);
     expect(result.exitCode).toBe(0);

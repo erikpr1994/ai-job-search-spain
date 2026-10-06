@@ -16,7 +16,7 @@ interface SearchResponse {
   }>;
 }
 
-describe("live smoke test (network)", () => {
+describe.skipIf(!process.env.LIVE_TESTS)("live smoke test (network)", () => {
   test("search -q React returns real offer cards", async () => {
     const result = await runCLI(["search", "-q", "React", "--limit", "3"]);
     const data = parseJSON<SearchResponse>(result);

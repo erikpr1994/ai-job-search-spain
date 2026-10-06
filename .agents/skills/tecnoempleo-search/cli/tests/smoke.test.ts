@@ -65,7 +65,7 @@ describe("tecnoempleo CLI — flag validation (offline)", () => {
   })
 })
 
-describe("tecnoempleo CLI — live search + detail", () => {
+describe.skipIf(!process.env.LIVE_TESTS)("tecnoempleo CLI — live search + detail", () => {
   test('search -q "React" returns >=1 result with non-null id/title/url', async () => {
     const r = await runCLI(["search", "-q", "React", "--limit", "5"])
     const out = parseJSON<SearchOutput>(r)
