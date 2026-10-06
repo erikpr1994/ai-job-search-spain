@@ -74,8 +74,8 @@ The framework encodes career guidance best practices, including structured evalu
 ### 1. Fork and clone
 
 ```bash
-gh repo fork MadsLorentzen/ai-job-search --clone
-cd ai-job-search
+gh repo fork erikpr1994/ai-job-search-spain --clone
+cd ai-job-search-spain
 ```
 
 > [!IMPORTANT]
