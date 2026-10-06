@@ -19,6 +19,12 @@ Primary (Spanish job market - scaffold more with `/add-portal`):
 - **getmanfred.com** - curated, salary-transparent tech/product roles (CLI: `getmanfred-search`)
 - **joppy.me** - Barcelona-based tech hiring platform; small but high-signal, most postings publish a salary range (CLI: `joppy-search`)
 
+Remote (worldwide; filter for roles open to Spain/EU):
+- **workatastartup.com** - Y Combinator startup jobs; no date field, keyword filter is client-side (CLI: `ycombinator-search`)
+- **himalayas.app** - remote jobs with public API (CLI: `himalayas-search`)
+- **remoteok.com** - remote jobs, public API (CLI: `remoteok-search`)
+- **weworkremotely.com** - remote jobs via RSS (CLI: `weworkremotely-search`)
+
 Secondary (company career pages via Google):
 - Direct Google searches with `site:` filters for known target companies
 
