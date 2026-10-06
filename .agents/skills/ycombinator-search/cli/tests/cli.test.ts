@@ -65,7 +65,7 @@ describe("ycombinator CLI flag validation", () => {
   });
 });
 
-describe("ycombinator CLI live search (network)", () => {
+describe.skipIf(!process.env.LIVE_TESTS)("ycombinator CLI live search (network)", () => {
   test("search by role returns real jobs with required fields", async () => {
     const result = await runCLI(["search", "--role", "science", "--limit", "5"]);
     const data = parseJSON<SearchResponse>(result);
@@ -94,7 +94,7 @@ describe("ycombinator CLI live search (network)", () => {
   }, 30000);
 });
 
-describe("ycombinator CLI live detail (network)", () => {
+describe.skipIf(!process.env.LIVE_TESTS)("ycombinator CLI live detail (network)", () => {
   test("detail of the first search result is readable", async () => {
     const search = await runCLI(["search", "--role", "science", "--limit", "1"]);
     const data = parseJSON<SearchResponse>(search);

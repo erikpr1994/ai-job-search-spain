@@ -20,7 +20,7 @@ function parsedStderr(stderr: string): { error?: string; code?: string } {
   }
 }
 
-describe("weworkremotely CLI live smoke", () => {
+describe.skipIf(!process.env.LIVE_TESTS)("weworkremotely CLI live smoke", () => {
   test("search with no filters returns results", async () => {
     const result = await runCLI(["search", "--limit", "5"]);
     const data = parseJSON<SearchResult>(result);

@@ -20,7 +20,7 @@ function parsedStderr(stderr: string): { error?: string; code?: string } {
   }
 }
 
-describe("himalayas CLI live smoke", () => {
+describe.skipIf(!process.env.LIVE_TESTS)("himalayas CLI live smoke", () => {
   test("search with no filters returns results", async () => {
     const result = await runCLI(["search", "--pages", "1", "--limit", "5"]);
     const data = parseJSON<SearchResult>(result);
