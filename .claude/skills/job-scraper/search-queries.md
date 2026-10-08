@@ -24,6 +24,7 @@ Remote (worldwide; filter for roles open to Spain/EU):
 - **himalayas.app** - remote jobs with public API (CLI: `himalayas-search`)
 - **remoteok.com** - remote jobs, public API (CLI: `remoteok-search`)
 - **weworkremotely.com** - remote jobs via RSS (CLI: `weworkremotely-search`)
+- **jobs.techeurope.io** - curated early-stage tech and research roles in Europe; sitemap + JSON-LD, slug keyword match (CLI: `techeurope-search`)
 
 Secondary (company career pages via Google):
 - Direct Google searches with `site:` filters for known target companies

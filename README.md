@@ -92,7 +92,7 @@ cd ai-job-search-spain
 PowerShell:
 
 ```powershell
-$tools = @("infojobs-search", "tecnoempleo-search", "getmanfred-search", "joppy-search", "linkedin-search", "freehire-search", "ycombinator-search", "himalayas-search", "remoteok-search", "weworkremotely-search")
+$tools = @("infojobs-search", "tecnoempleo-search", "getmanfred-search", "joppy-search", "linkedin-search", "freehire-search", "ycombinator-search", "himalayas-search", "remoteok-search", "weworkremotely-search", "techeurope-search")
 foreach ($tool in $tools) {
   Push-Location ".agents/skills/$tool/cli"
   bun install
@@ -103,7 +103,7 @@ foreach ($tool in $tools) {
 Bash / zsh / Git Bash:
 
 ```bash
-for tool in infojobs-search tecnoempleo-search getmanfred-search joppy-search ycombinator-search himalayas-search remoteok-search weworkremotely-search linkedin-search freehire-search; do
+for tool in infojobs-search tecnoempleo-search getmanfred-search joppy-search ycombinator-search himalayas-search remoteok-search weworkremotely-search techeurope-search linkedin-search freehire-search; do
   (cd .agents/skills/$tool/cli && bun install)
 done
 ```
@@ -204,7 +204,8 @@ ai-job-search/
 │   ├── ycombinator-search/            # Y Combinator Work at a Startup (remote-friendly, global)
 │   ├── himalayas-search/              # Himalayas (remote jobs, public API)
 │   ├── remoteok-search/               # RemoteOK (remote jobs, public API)
-│   └── weworkremotely-search/         # We Work Remotely (remote jobs, RSS)
+│   ├── weworkremotely-search/         # We Work Remotely (remote jobs, RSS)
+│   └── techeurope-search/             # {Tech: Europe} (early-stage tech roles in Europe)
 ├── cv/
 │   └── main_example.tex               # moderncv LaTeX template
 ├── cover_letters/
@@ -319,10 +320,12 @@ Give it your local job board's URL. The command investigates the portal (search-
 
 Maintaining a fork adapted to your market or language? Add it to the [Community forks & adaptations](https://github.com/MadsLorentzen/ai-job-search/discussions/78) thread so others can find it.
 
-For **country-agnostic** starting points outside Spain, this fork ships two portal skills alongside the Spanish boards:
+For **country-agnostic** starting points outside Spain, this fork ships these portal skills alongside the Spanish boards:
 
 - **`linkedin-search`** — built on LinkedIn's public, unauthenticated `jobs-guest` endpoints. Field-agnostic, **zero runtime dependencies** (runs with just `bun`), and takes the search location as an explicit flag, so it works for any market out of the box (`-l "Berlin, Germany"`, `-l "Mumbai, Maharashtra, India"`, `-l "Remote"`, …). Intended for **personal use only** — automated access is against LinkedIn's Terms of Service, so keep volume low. See `.agents/skills/linkedin-search/SKILL.md`.
 - **`freehire-search`** — queries the [freehire.me](https://freehire.me) aggregator's public REST API (JSON, no API key). Tech-focused (software, data, engineering, DevOps, remote), multi-market via facet flags (`--region`, `--country`, `--remote`), and **zero runtime dependencies**. Unlike the HTML-scraping Spanish portals, results come back structured (skills, seniority, category). The backend is MIT-licensed and [self-hostable](https://github.com/strelov1/freehire) — point `FREEHIRE_API_URL` at your own instance if you prefer. See `.agents/skills/freehire-search/SKILL.md`.
+- **Remote boards** — `ycombinator-search` (Y Combinator's Work at a Startup), `himalayas-search` and `remoteok-search` (public JSON APIs), and `weworkremotely-search` (RSS feeds). All are **zero runtime dependencies** and list remote-friendly roles worldwide.
+- **`techeurope-search`** — curated early-stage tech and research roles at European startups and AI labs on [jobs.techeurope.io](https://jobs.techeurope.io). Reads only the public sitemap and each job page's JSON-LD, because the site disallows `/api` in robots.txt. See `.agents/skills/techeurope-search/SKILL.md`.
 
 ### Extending the framework: portals, templates, criteria - and borrowing from other forks
 
