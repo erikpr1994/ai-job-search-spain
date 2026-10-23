@@ -20,5 +20,73 @@
       "Bash(python3 tools/verify_layout.py:*)",
       "Bash(pdftotext:*)"
     ]
-  }
+  },
+  "deniedMcpServers": [
+    {
+      "serverName": "claude.ai Kiwi.com"
+    },
+    {
+      "serverName": "claude.ai AllTrails"
+    },
+    {
+      "serverName": "claude.ai Revolut X"
+    },
+    {
+      "serverName": "claude.ai GoDaddy"
+    },
+    {
+      "serverName": "claude.ai AWS Marketplace"
+    },
+    {
+      "serverName": "claude.ai Composio"
+    },
+    {
+      "serverName": "claude.ai Neon DB"
+    },
+    {
+      "serverName": "claude.ai api.kapso.ai"
+    },
+    {
+      "serverName": "kapso"
+    },
+    {
+      "serverName": "claude.ai Supabase"
+    },
+    {
+      "serverName": "claude.ai Vercel"
+    },
+    {
+      "serverName": "claude.ai PostHog"
+    },
+    {
+      "serverName": "claude.ai Linear"
+    },
+    {
+      "serverName": "claude.ai Sentry"
+    },
+    {
+      "serverName": "claude.ai PubMed"
+    },
+    {
+      "serverName": "claude.ai Peak Health"
+    },
+    {
+      "serverName": "claude.ai Lift track"
+    },
+    {
+      "serverName": "claude.ai Strava"
+    },
+    {
+      "serverName": "claude.ai Withings"
+    },
+    {
+      "serverName": "garmin"
+    },
+    {
+      "serverName": "hevy-mcp"
+    },
+    {
+      "serverName": "trainingpeaks"
+    }
+  ]
 }
